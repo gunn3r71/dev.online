@@ -1,5 +1,5 @@
-﻿using Xunit;
-using Xunit.Sdk;
+﻿using ExpectedObjects;
+using Xunit;
 
 namespace DomainTest.Courses
 {
@@ -14,17 +14,17 @@ namespace DomainTest.Courses
         [Fact(DisplayName = "AdicionarCurso")]
         public void DeveCriarCurso()
         {
-            var name = "TDD";
-            var workLoad = 20;
-            var targetAudience = "student";
-            var price = 100.00;
+            var expectedCourse = new
+            {
+                Name = "TDD",
+                WorkLoad = 20,
+                TargetAudience = "student",
+                Price = 100.00
+            };
 
-            var course = new Course(name, workLoad, targetAudience, price);
+            var course = new Course(expectedCourse.Name, expectedCourse.WorkLoad, expectedCourse.TargetAudience, expectedCourse.Price);
 
-            Assert.Equal(name, course.Name);
-            Assert.Equal(workLoad, course.WorkLoad);
-            Assert.Equal(targetAudience, course.TargetAudience);
-            Assert.Equal(price, course.Price);
+            expectedCourse.ToExpectedObject().ShouldMatch(course);
         }
     }
     
