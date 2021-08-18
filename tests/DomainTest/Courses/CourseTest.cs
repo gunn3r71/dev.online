@@ -6,8 +6,8 @@ namespace DomainTest.Courses
     //Eu enquanto admin quero poder criar e editar cursos para que sejam abertas matrículas para o mesmo.
     //Critérios de aceite
     //Criar um curso com nome, carga horária, público alvo e valor do curso; OK
-    //As opções para público alvo são: estudante, universitário, empregado ou empreendedor; 
-    //Todos os campos do curso são obrigatórios
+    //As opções para público alvo são: estudante, universitário, empregado ou empreendedor;  OK
+    //Todos os campos do curso são obrigatórios;
 
     public class CourseTest
     {
@@ -18,7 +18,7 @@ namespace DomainTest.Courses
             {
                 Name = "TDD",
                 WorkLoad = 20,
-                TargetAudience = "student",
+                TargetAudience = TargetAudience.CollegeStudents,
                 Price = 100.00
             };
 
@@ -27,15 +27,23 @@ namespace DomainTest.Courses
             expectedCourse.ToExpectedObject().ShouldMatch(course);
         }
     }
-    
+
+    public enum TargetAudience
+    {
+        Students,
+        CollegeStudents,
+        Employees,
+        Entrepreneur
+    }
+
     public class Course
     {
         public string Name { get; private set; }
         public int WorkLoad { get; private set; }
-        public string TargetAudience { get; private set; }
+        public TargetAudience TargetAudience { get; private set; }
         public double Price { get; private set; }
 
-        public Course(string name, int workLoad, string targetAudience, double price)
+        public Course(string name, int workLoad, TargetAudience targetAudience, double price)
         {
             Name = name;
             WorkLoad = workLoad;
